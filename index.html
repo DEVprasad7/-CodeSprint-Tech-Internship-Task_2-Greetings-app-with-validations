@@ -1,60 +1,83 @@
 <html>
-    <head>
-        <title>Greeting App</title>
-        <style>
-            *{text-align: center;font-size: 50px;}
-            h2{color: rgb(0, 0, 0); font-size: 28px;}
-            .input{font-size: 22px; margin-bottom: 10px; border-radius: 8px;}
-            .submit{font-size: 22px; border-radius: 8px; background-color: rgb(181, 181, 246); cursor: pointer;}
-            body{background-color: floralwhite;}
-        </style>
-    </head>
-    <body>
-        <h1>Greeting App</h1>
-        <form onsubmit=show()>
-            <input type="text" id="name" class="input" placeholder="Enter Your Name">
-            <!-- <br> -->
-            <input type="submit" class="submit">
-        </form>
-        <h2 id="msg"></h2>
-        <script>
-            function show(){
-                event.preventDefault();
-                let name = document.getElementById('name');
-                let msg = document.getElementById('msg');
-                if (name.value === ""){
-                    alert("Name cannot be empty");
-                    return;
-                }
-                if (name.value.trim() === ""){
-                    alert("Name cannot contain only spaces");
-                    return;
-                }
-                if (!name.value.match(/^[a-zA-Z ]+$/)){
-                    alert("Name can only contain letters and spaces");
-                    return;
-                }
-                let d = new Date();
-                let hr = d.getHours();
-                let day = d.getDay();
+  <head>
+    <title>Days Remaining App</title>
+    <style>
+      * {
+        text-align: center;
+        font-size: 50px;
+      }
 
-                ans = "";
-                if (day === 0 || day === 6){
-                    ans = "It's a Weekend. ";
-                } else {
-                    ans = "It's a Weekday. ";
-                }
+      h2 {
+        color: rgb(0, 0, 0);
+        font-size: 28px;
+      }
 
-                if(hr < 12){
-                    msg.innerText = "Good Morning " + name.value + ". " + ans;
-                } else if(hr < 16){
-                    msg.innerText = "Good Afternoon " + name.value + ". " + ans;
-                } else {
-                    msg.innerText = "Good Evening " + name.value + ". " + ans;
-                }
-                name.value = ""
-            }
-        </script>
-    </body>
+      .input {
+        font-size: 22px;
+        margin-bottom: 10px;
+        border-radius: 8px;
+      }
 
+      .submit {
+        font-size: 22px;
+        border-radius: 8px;
+        background-color: rgb(181, 181, 246);
+        cursor: pointer;
+      }
+
+      body {
+        background-color: floralwhite;
+      }
+    </style>
+  </head>
+
+  <body>
+    <h1>Days Remaining App</h1>
+    <form onsubmit="show()">
+      <br />
+      <input
+        type="text"
+        id="Name"
+        class="input"
+        placeholder="Enter event name"
+      />
+      <br />
+      <input type="date" id="Date" class="input" placeholder="Enter Date" />
+      <input type="submit" class="submit" />
+    </form>
+    <h2 id="msg"></h2>
+
+    <script>
+      function show() {
+        event.preventDefault();
+        let Name = document.getElementById("Name");
+        let e_date = document.getElementById("Date");
+        let msg = document.getElementById("msg");
+
+        try {
+          if (Name.value === "") {
+            throw "Please fill all the fields";
+          }
+          let today = new Date();
+          let DateObj = new Date(e_date.value);
+          let daysRemaining = Math.ceil(
+            (DateObj - today) / (1000 * 60 * 60 * 24)
+          );
+          if (daysRemaining < 0) {
+            msg.innerText =
+              "The event " +
+              Name.value +
+              " was " +
+              Math.abs(daysRemaining) +
+              " days ago.";
+          } else {
+            msg.innerText =
+              "Days remaining for " + Name.value + ": " + daysRemaining;
+          }
+        } catch (err) {
+          alert("Error: " + err);
+        }
+      }
+    </script>
+  </body>
 </html>
