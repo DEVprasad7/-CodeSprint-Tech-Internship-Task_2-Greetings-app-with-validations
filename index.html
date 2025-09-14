@@ -1,0 +1,59 @@
+<html>
+    <head>
+        <title>Greeting App</title>
+        <style>
+            *{text-align: center;font-size: 50px;}
+            h2{color: rgb(0, 0, 0); font-size: 28px;}
+            .input{font-size: 22px; margin-bottom: 10px; border-radius: 8px;}
+            .submit{font-size: 22px; border-radius: 8px; background-color: rgb(181, 181, 246); cursor: pointer;}
+            body{background-color: floralwhite;}
+        </style>
+    </head>
+    <body>
+        <h1>Greeting App</h1>
+        <form onsubmit=show()>
+            <input type="text" id="name" class="input" placeholder="Enter Your Name">
+            <!-- <br> -->
+            <input type="submit" class="submit">
+        </form>
+        <h2 id="msg"></h2>
+        <script>
+            function show(){
+                event.preventDefault();
+                let name = document.getElementById('name');
+                let msg = document.getElementById('msg');
+                if (name.value === ""){
+                    alert("Name cannot be empty");
+                    return;
+                }
+                if (name.value.trim() === ""){
+                    alert("Name cannot contain only spaces");
+                    return;
+                }
+                if (!name.value.match(/^[a-zA-Z ]+$/)){
+                    alert("Name can only contain letters and spaces");
+                    return;
+                }
+                let d = new Date();
+                let hr = d.getHours();
+                let day = d.getDay();
+
+                ans = "";
+                if (day == 0 || day == 6){
+                    ans = "It's a Weekend. ";
+                } else {
+                    ans = "It's a Weekday. ";
+                }
+
+                if(hr < 12){
+                    msg.innerText = "Good Morning " + name.value + ". " + ans;
+                } else if(hr < 16){
+                    msg.innerText = "Good Afternoon " + name.value + ". " + ans;
+                } else {
+                    msg.innerText = "Good Evening " + name.value + ". " + ans;
+                }
+                name.value = ""
+            }
+        </script>
+    </body>
+</html>
